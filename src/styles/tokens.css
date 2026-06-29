@@ -1,0 +1,366 @@
+/* ============================================================
+   Wayta Design System — Color & Type Tokens (Emerald edition)
+   ============================================================
+   Drop-in replacement for the old amber/gold system.
+   Emerald-400 (#34d399) = dark-mode accent (brighter on black)
+   Emerald-600 (#059669) = light-mode accent (darker on paper)
+   ============================================================ */
+
+/* ---- Fonts (Google Fonts) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ============================================================
+     COLOR — BRAND (Emerald / Signal Green)
+     ============================================================
+     Emerald-600 (#059669) is the day-mode accent; Emerald-400
+     (#34d399) is the dark-mode accent (one step brighter for
+     legibility on black).
+     ============================================================ */
+  --wayta-emerald-50:  #ecfdf5;
+  --wayta-emerald-100: #d1fae5;
+  --wayta-emerald-200: #a7f3d0;
+  --wayta-emerald-300: #6ee7b7;
+  --wayta-emerald-400: #34d399; /* DARK-MODE ACCENT */
+  --wayta-emerald-500: #10b981; /* mid signal / hover */
+  --wayta-emerald-600: #059669; /* PRIMARY — light-mode accent */
+  --wayta-emerald-700: #047857;
+  --wayta-emerald-800: #065f46;
+  --wayta-emerald-900: #064e3b;
+
+  /* ---- LEGACY amber aliases (so old tokens still resolve) ---- */
+  --wayta-amber-50:  var(--wayta-emerald-50);
+  --wayta-amber-100: var(--wayta-emerald-100);
+  --wayta-amber-200: var(--wayta-emerald-200);
+  --wayta-amber-300: var(--wayta-emerald-300);
+  --wayta-amber-400: var(--wayta-emerald-400);
+  --wayta-amber-500: var(--wayta-emerald-500);
+  --wayta-amber-600: var(--wayta-emerald-600);
+  --wayta-amber-700: var(--wayta-emerald-700);
+  --wayta-amber-800: var(--wayta-emerald-800);
+  --wayta-amber-900: var(--wayta-emerald-900);
+
+  /* Clubland — after-hours blacks (unchanged from original DS) */
+  --wayta-ink-0:   #0a0a0a;
+  --wayta-ink-50:  #111111;
+  --wayta-ink-100: #141414; /* onboarding "surface" */
+  --wayta-ink-200: #1c1c1c; /* onboarding "surface2" */
+  --wayta-ink-300: #262626; /* onboarding "border" */
+  --wayta-ink-400: #3a3a3a; /* onboarding "borderStrong" */
+  --wayta-ink-500: #525252;
+  --wayta-ink-600: #737373; /* onboarding "fg3" */
+  --wayta-ink-700: #a3a3a3; /* onboarding "fg2" */
+  --wayta-ink-800: #d4d4d4;
+  --wayta-ink-900: #fafaf9; /* onboarding "fg" */
+
+  /* Paper — day-mode neutrals (refined to match onboarding light) */
+  --wayta-paper-0:   #ffffff;
+  --wayta-paper-50:  #f6f6f4; /* onboarding light "surface" */
+  --wayta-paper-100: #ececea; /* onboarding light "surface2" */
+  --wayta-paper-200: #e6e6e2; /* onboarding light "border" */
+  --wayta-paper-300: #cfcfca; /* onboarding light "borderStrong" */
+
+  /* Status / semantic — narrow set, used sparingly */
+  --wayta-go:      var(--wayta-emerald-500);
+  --wayta-go-bg:   #052e16;
+  --wayta-warn:    #eab308;
+  --wayta-warn-bg: #422006;
+  --wayta-stop:    #ef4444;
+  --wayta-stop-bg: #450a0a;
+  --wayta-info:    #38bdf8;
+
+  /* ============================================================
+     SEMANTIC COLOR ROLES — default to DARK MODE
+     ============================================================ */
+  --bg:           var(--wayta-ink-0);
+  --bg-elev-1:    var(--wayta-ink-100);
+  --bg-elev-2:    var(--wayta-ink-200);
+  --bg-elev-3:    var(--wayta-ink-300);
+  --bg-amber:     var(--wayta-emerald-400);       /* legacy alias */
+  --bg-amber-soft: rgba(52, 211, 153, 0.14);      /* legacy alias */
+  --bg-emerald:      var(--wayta-emerald-400);
+  --bg-emerald-soft: rgba(52, 211, 153, 0.14);
+
+  --fg:           var(--wayta-ink-900);
+  --fg-1:         var(--wayta-ink-800);
+  --fg-2:         var(--wayta-ink-700);
+  --fg-3:         var(--wayta-ink-600);
+  --fg-on-amber:  #062014;                        /* legacy alias */
+  --fg-on-emerald: #062014;                       /* AAA on emerald */
+  --fg-amber:     var(--wayta-emerald-400);       /* legacy alias */
+  --fg-emerald:   var(--wayta-emerald-400);
+
+  --border:        var(--wayta-ink-300);
+  --border-strong: var(--wayta-ink-400);
+  --border-amber:   rgba(52, 211, 153, 0.4);      /* legacy alias */
+  --border-emerald: rgba(52, 211, 153, 0.4);
+
+  --accent:       var(--wayta-emerald-400);
+  --accent-hover: var(--wayta-emerald-300);
+  --accent-press: var(--wayta-emerald-500);
+
+  /* ============================================================
+     RADII (refined for onboarding feel — slightly softer)
+     ============================================================ */
+  --r-xs:  4px;
+  --r-sm:  8px;
+  --r-md:  14px;   /* onboarding input radius */
+  --r-lg:  16px;   /* onboarding card radius */
+  --r-xl:  20px;   /* onboarding map / payment-card radius */
+  --r-2xl: 28px;   /* onboarding hero block radius */
+  --r-pill: 999px;
+
+  /* ============================================================
+     SPACING — 4px base (unchanged)
+     ============================================================ */
+  --s-1:  4px;  --s-2:  8px;  --s-3:  12px; --s-4:  16px;
+  --s-5:  20px; --s-6:  24px; --s-8:  32px; --s-10: 40px;
+  --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+
+  /* ============================================================
+     SHADOWS / GLOW (now emerald)
+     ============================================================ */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.45);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.55);
+  --glow-amber:      0 10px 40px rgba(52,211,153,0.22);  /* legacy alias */
+  --glow-amber-soft: 0 8px 24px rgba(52,211,153,0.18);   /* legacy alias */
+  --glow-emerald:      0 10px 40px rgba(52,211,153,0.22);
+  --glow-emerald-soft: 0 8px 24px rgba(52,211,153,0.18);
+
+  /* ============================================================
+     MOTION (unchanged)
+     ============================================================ */
+  --ease-out:  cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-in:   cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-snap: cubic-bezier(0.5, 1.5, 0.5, 1);
+  --dur-fast:  120ms;
+  --dur-base:  200ms;
+  --dur-slow:  360ms;
+
+  /* ============================================================
+     TYPE — families
+     ============================================================
+     Same stack as before — onboarding uses these directly. */
+  --font-display: 'Space Grotesk', 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --font-body:    'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Type scale — matches the onboarding screens */
+  --t-display-1: 72px;
+  --t-display-2: 56px;
+  --t-hero:      44px;   /* onboarding hero block "Skip the queue." */
+  --t-h1:        32px;   /* onboarding step headings */
+  --t-h2:        24px;
+  --t-h3:        20px;
+  --t-h4:        18px;
+  --t-body-lg:   16px;   /* onboarding body */
+  --t-body:      15px;   /* onboarding default */
+  --t-body-sm:   13px;   /* hint copy */
+  --t-caption:   12px;
+  --t-overline:  10.5px; /* onboarding eyebrow */
+
+  --lh-tight:    1.05;
+  --lh-snug:     1.2;
+  --lh-normal:   1.45;
+  --lh-relaxed:  1.5;
+
+  --tracking-tight:  -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.02em;
+  --tracking-overline: 0.22em;   /* onboarding eyebrow tracking */
+}
+
+/* ============================================================
+   LIGHT MODE OVERRIDE
+   Light-mode accent steps DOWN to emerald-600 (darker) for
+   contrast on paper; dark-mode keeps emerald-400.
+   ============================================================ */
+[data-theme="light"] {
+  --bg:            var(--wayta-paper-0);
+  --bg-elev-1:     var(--wayta-paper-50);
+  --bg-elev-2:     var(--wayta-paper-100);
+  --bg-elev-3:     var(--wayta-paper-200);
+  --bg-amber-soft: rgba(5, 150, 105, 0.10);    /* legacy */
+  --bg-emerald-soft: rgba(5, 150, 105, 0.10);
+
+  --fg:    #0a0a0a;
+  --fg-1:  #1f1f1f;
+  --fg-2:  #525252;
+  --fg-3:  #8a8a85;
+
+  --fg-amber:   var(--wayta-emerald-600);      /* legacy */
+  --fg-emerald: var(--wayta-emerald-600);
+
+  --fg-on-amber:   #ffffff;                    /* legacy */
+  --fg-on-emerald: #ffffff;
+
+  --border:        var(--wayta-paper-200);
+  --border-strong: var(--wayta-paper-300);
+  --border-amber:   rgba(5, 150, 105, 0.35);   /* legacy */
+  --border-emerald: rgba(5, 150, 105, 0.35);
+
+  --accent:       var(--wayta-emerald-600);
+  --accent-hover: var(--wayta-emerald-500);
+  --accent-press: var(--wayta-emerald-700);
+
+  --glow-amber:      0 10px 30px rgba(5, 150, 105, 0.18);  /* legacy */
+  --glow-amber-soft: 0 8px 20px rgba(5, 150, 105, 0.14);   /* legacy */
+  --glow-emerald:      0 10px 30px rgba(5, 150, 105, 0.18);
+  --glow-emerald-soft: 0 8px 20px rgba(5, 150, 105, 0.14);
+}
+
+/* ============================================================
+   SEMANTIC TYPE CLASSES — drop on any element
+   ============================================================ */
+.display-1 {
+  font-family: var(--font-display: var(--font-display);
+  font-size: var(--t-display-1);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.display-2 {
+  font-family: var(--font-display);
+  font-size: var(--t-display-2);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.hero {
+  font-family: var(--font-display);
+  font-size: var(--t-hero);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.h1 {
+  font-family: var(--font-display);
+  font-size: var(--t-h1);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.h2 {
+  font-family: var(--font-display);
+  font-size: var(--t-h2);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+}
+.h3 {
+  font-family: var(--font-display);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+.h4 {
+  font-family: var(--font-display);
+  font-size: var(--t-h4);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+.body-lg {
+  font-family: var(--font-body);
+  font-size: var(--t-body-lg);
+  font-weight: 400;
+  line-height: var(--lh-relaxed);
+}
+.body {
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  font-weight: 400;
+  line-height: var(--lh-relaxed);
+}
+.body-sm {
+  font-family: var(--font-body);
+  font-size: var(--t-body-sm);
+  font-weight: 400;
+  line-height: var(--lh-normal);
+}
+.caption {
+  font-family: var(--font-body);
+  font-size: var(--t-caption);
+  font-weight: 500;
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+}
+.overline {
+  font-family: var(--font-mono);
+  font-size: var(--t-overline);
+  font-weight: 600;
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--fg-emerald);
+}
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum';
+}
+
+/* ============================================================
+   UTILITY CLASSES (minimal — prefer CSS tokens directly)
+   ============================================================ */
+.surface {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+.card {
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s-6);
+}
+.glass {
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+.btn-primary {
+  height: 48px;
+  padding: 0 22px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: var(--fg-on-emerald);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--glow-emerald);
+  transition: all var(--dur-base) var(--ease-out);
+}
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-primary:active { background: var(--accent-press); transform: scale(0.98); }
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-pill);
+}
+.input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+}
+.input:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg-emerald-soft);
+}
+.input input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 0;
+}
