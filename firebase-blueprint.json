@@ -1,0 +1,354 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with demographics and role",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "full_name": { "type": "string" },
+        "phone": { "type": "string" },
+        "date_of_birth": { "type": "string", "format": "date" },
+        "home_city": { "type": "string" },
+        "role": { "type": "string", "enum": ["PATRON", "BARTENDER", "MANAGER", "EVENT_MANAGER", "VENDOR", "ADMIN"] },
+        "assigned_venue_id": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "budgetLimit": { "type": "number" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "ThemeConfig": {
+      "title": "ThemeConfig",
+      "description": "Visual theme vectors for on-site experiences",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "primaryColor": { "type": "string" },
+        "secondaryColor": { "type": "string" },
+        "accentColor": { "type": "string" },
+        "backgroundColor": { "type": "string" },
+        "cardColor": { "type": "string" },
+        "textColor": { "type": "string" },
+        "textMutedColor": { "type": "string" },
+        "fontHeading": { "type": "string" },
+        "fontBody": { "type": "string" },
+        "uiDensity": { "type": "string", "enum": ["compact", "comfortable", "minimalist"] },
+        "iconographyStyle": { "type": "string", "enum": ["flat", "line", "glass"] },
+        "loaderStyle": { "type": "string", "enum": ["ring", "pulse", "bar", "neon-spin"] }
+      },
+      "required": ["name", "primaryColor", "secondaryColor", "backgroundColor"]
+    },
+    "Venue": {
+      "title": "Venue",
+      "description": "Location entity (Clubs, Pubs, Festivals)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "location_coords": { 
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "venue_type": { "type": "string", "enum": ["Club", "Pub", "Festival"] },
+        "opening_hours": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "theme": { "$ref": "ThemeConfig" }
+      },
+      "required": ["name", "venue_type"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Inventory item/product sold at a venue",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "venue_id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string", "enum": ["Beer", "Gin", "Energy Drink", "Bottle Service", "Food", "Other"] },
+        "brand_name": { "type": "string" },
+        "price": { "type": "number" },
+        "stock_quantity": { "type": "number" }
+      },
+      "required": ["venue_id", "name", "category", "price"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "Musical event or special occasion at a venue",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "venueId": { "type": "string" },
+        "title": { "type": "string" },
+        "genre": { "type": "string", "description": "e.g., Amapiano, Hip-Hop" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "endTime": { "type": "string", "format": "date-time" },
+        "theme": { "$ref": "ThemeConfig" }
+      },
+      "required": ["venueId", "title", "genre", "startTime"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Order transaction capturing purchase metrics",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "venue_id": { "type": "string" },
+        "event_id": { "type": "string" },
+        "gross_amount": { "type": "number", "description": "Total before commission" },
+        "total_amount": { "type": "number", "description": "Final amount paid by user" },
+        "wayta_commission": { "type": "number", "description": "5% fee" },
+        "net_venue_payout": { "type": "number", "description": "Amount paid to venue after commission" },
+        "payment_status": { "type": "string", "enum": ["Pending", "Paid", "Failed"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "venue_id", "total_amount"]
+    },
+    "OrderItem": {
+      "title": "Order Item",
+      "description": "Individual items within an order for granular analytics",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "product_id": { "type": "string" },
+        "quantity": { "type": "number" },
+        "price_at_purchase": { "type": "number" }
+      },
+      "required": ["product_id", "quantity", "price_at_purchase"]
+    },
+    "Budget": {
+      "title": "Budget",
+      "description": "User set budget for a venue/session",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "venue_id": { "type": "string" },
+        "amount_limit": { "type": "number" },
+        "current_spend": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "Completed"] },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "venue_id", "amount_limit"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial transaction record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "venue_id": { "type": "string" },
+        "venueName": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "amount", "status"]
+    },
+    "BehaviorLog": {
+      "title": "Behavior Log",
+      "description": "Tracking purchase decision patterns",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "action": { "type": "string", "enum": ["Add_to_cart", "Remove_from_cart", "Budget_Warning_Triggered"] },
+        "product_id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "action", "timestamp"]
+    },
+    "EmailTemplate": {
+      "title": "Email Template",
+      "description": "Transactional email templates",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "subject": { "type": "string" },
+        "body": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "subject", "body"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Venue reviews left by users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "venue_id": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["user_id", "venue_id", "rating"]
+    },
+    "OnboardingRequest": {
+      "title": "Onboarding Request",
+      "description": "Business onboarding applications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "business_name": { "type": "string" },
+        "contact_email": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["business_name", "contact_email"]
+    },
+    "GuestListItem": {
+      "title": "Guest List Item",
+      "description": "Individual guest on an event guest list",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "venueId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "status": { "type": "string", "enum": ["Invited", "Confirmed", "Checked-in", "No-show"] },
+        "addedBy": { "type": "string" },
+        "addedAt": { "type": "string", "format": "date-time" },
+        "isVip": { "type": "boolean" }
+      },
+      "required": ["eventId", "venueId", "name", "status", "addedBy"]
+    },
+    "Mail": {
+      "title": "Mail",
+      "description": "Queue for firestore-send-email extension",
+      "type": "object",
+      "properties": {
+        "to": { "type": "string" },
+        "message": { 
+          "type": "object",
+          "properties": {
+            "subject": { "type": "string" },
+            "html": { "type": "string" }
+          }
+        }
+      },
+      "required": ["to", "message"]
+    },
+    "OnboardingContent": {
+      "title": "Onboarding Content",
+      "description": "Onboarding content and features list per user role",
+      "type": "object",
+      "properties": {
+        "role": { "type": "string" },
+        "title": { "type": "string" },
+        "welcomeHtml": { "type": "string" },
+        "featuresHtml": { "type": "string" },
+        "stepsHtml": { "type": "string" },
+        "tipsHtml": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["role", "title", "welcomeHtml", "featuresHtml", "stepsHtml", "tipsHtml"]
+    }
+  },
+  "rtdb": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/venues/{venueId}": {
+      "schema": "Venue",
+      "description": "Entertainment venues"
+    },
+    "/venues/{venueId}/products/{productId}": {
+      "schema": "Product",
+      "description": "Products available at a venue"
+    },
+    "/venues/{venueId}/events/{eventId}": {
+      "schema": "Event",
+      "description": "Events scheduled at a venue"
+    },
+    "/venues/{venueId}/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Reviews for a venue"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders"
+    },
+    "/orders/{orderId}/items/{itemId}": {
+      "schema": "OrderItem",
+      "description": "Line items for an order"
+    },
+    "/budgets/{budgetId}": {
+      "schema": "Budget",
+      "description": "User spending budgets"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Financial transactions"
+    },
+    "/behavior_logs/{logId}": {
+      "schema": "BehaviorLog",
+      "description": "Analytics tracking logs"
+    },
+    "/email_templates/{templateId}": {
+      "schema": "EmailTemplate",
+      "description": "Email templates for communications"
+    },
+    "/onboarding_requests/{requestId}": {
+      "schema": "OnboardingRequest",
+      "description": "Onboarding applications"
+    },
+    "/mail/{mailId}": {
+      "schema": "Mail",
+      "description": "Outbound email queue"
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/venues/{venueId}": {
+      "schema": "Venue",
+      "description": "Venue details"
+    },
+    "/inventory/{itemId}": {
+      "schema": "Product",
+      "description": "Inventory items"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders"
+    },
+    "/notifications/{notifId}": {
+      "schema": "BehaviorLog",
+      "description": "System and user notifications"
+    },
+    "/guest_lists/{guestId}": {
+      "schema": "GuestListItem",
+      "description": "Event guest list entries"
+    },
+    "/admin_audit_logs/{logId}": {
+      "schema": "AdminAuditLog",
+      "description": "Administrative action history log"
+    },
+    "/onboarding_content/{contentId}": {
+      "schema": "OnboardingContent",
+      "description": "Role-based onboarding configurations and landing guidelines"
+    },
+    "/themes/{themeId}": {
+      "schema": "ThemeConfig",
+      "description": "Reusable theme templates and custom presets saved by admins"
+    },
+    "/system/{docId}": {
+      "schema": "ThemeConfig",
+      "description": "Global and system-wide default settings, such as system fallback themes"
+    }
+  }
+}

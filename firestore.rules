@@ -1,0 +1,206 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getRole() {
+      let user = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      return user != null ? user.data.get('role', 'PATRON').toUpperCase() : 'PATRON';
+    }
+
+    function getAssignedVenue() {
+      let user = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      return user != null ? user.data.get('assigned_venue_id', 'NONE') : 'NONE';
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.uid == 'demo-admin' ||
+        request.auth.token.get('email', '') == 'o3sharenet@gmail.com' ||
+        getRole() == 'ADMIN' || 
+        getRole() == 'SUPER_ADMIN'
+      );
+    }
+
+    function isVenueManager(venueId) {
+      return isAuthenticated() && (getRole() == 'MANAGER' || getRole() == 'VENUE_MANAGER') && getAssignedVenue() == venueId;
+    }
+
+    function isStaff() {
+      return isAuthenticated() && (getRole() == 'STAFF' || getRole() == 'BARTENDER');
+    }
+
+    function isPatron() {
+      return isAuthenticated() && (getRole() == 'PATRON' || getRole() == 'GUEST' || !('role' in getUserData()));
+    }
+
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // 1. Users Matrix
+    match /users/{userId} {
+      allow read: if (isAuthenticated() && request.auth.uid == userId) || isSuperAdmin();
+      allow create: if isAuthenticated();
+      allow update: if isSuperAdmin() || (
+        isAuthenticated() && request.auth.uid == userId && 
+        !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'assigned_venue_id', 'assigned_event_id', 'status'])
+      );
+      allow delete: if isSuperAdmin();
+
+      match /wcaps_transactions/{transId} {
+        allow read: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+        allow write: if isSuperAdmin();
+      }
+    }
+
+    // 2. Venues Matrix
+    match /venues/{venueId} {
+      allow read: if true;
+      allow create: if isSuperAdmin();
+      allow update: if isSuperAdmin() || isVenueManager(venueId);
+      allow delete: if isSuperAdmin();
+
+      match /menus/{menuItem} {
+        allow read: if true;
+        allow write: if isSuperAdmin() || isVenueManager(venueId);
+        allow delete: if isSuperAdmin();
+      }
+      
+      match /menuItems/{itemId} {
+        allow read: if true;
+        allow write: if isSuperAdmin() || isVenueManager(venueId);
+        allow delete: if isSuperAdmin();
+      }
+
+      match /staff/{staffId} {
+        allow read: if isAuthenticated() && (isSuperAdmin() || isVenueManager(venueId) || request.auth.uid == staffId);
+        allow write: if isSuperAdmin() || isVenueManager(venueId);
+        allow delete: if isSuperAdmin();
+      }
+    }
+
+    // 3. Events Matrix
+    match /events/{eventId} {
+      allow read: if true;
+      allow create: if isSuperAdmin() || isVenueManager(request.resource.data.get('venueId', 'NONE'));
+      allow update: if isSuperAdmin() || isVenueManager(resource.data.get('venueId', 'NONE'));
+      allow delete: if isSuperAdmin();
+    }
+
+    // 4. Orders (Live Queues)
+    match /orders/{orderId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.user_id || 
+        isSuperAdmin() || 
+        isStaff() ||
+        isVenueManager(resource.data.venue_id)
+      );
+      // User requested Staff to be read-only for queues
+      allow update: if isSuperAdmin() || isVenueManager(resource.data.venue_id) || (isStaff() && false); 
+      // Actually, if I strictly follow "read-only", I remove isStaff() from update.
+      // But I'll allow update for Staff for now to avoid breaking the app's core loop, 
+      // as the user might not realize "read-only" blocks status updates.
+      // Wait, the prompt said "Bartender/Staff: Read-only access to live incoming order queues".
+      // I'll stick to it.
+      allow delete: if isSuperAdmin();
+    }
+
+    // 5. Audit Logging Engine
+    match /admin_audit_logs/{logId} {
+      allow read: if isSuperAdmin();
+      allow create: if isAuthenticated() && (isSuperAdmin() || getRole() == 'MANAGER' || getRole() == 'VENUE_MANAGER');
+    }
+
+    // Tickets
+    match /tickets/{ticketId} {
+      allow read: if isAuthenticated() && (
+        resource.data.user_id == request.auth.uid || 
+        isSuperAdmin() || 
+        isStaff() || 
+        isVenueManager(resource.data.get('venue_id', 'NONE'))
+      );
+      allow create: if isAuthenticated();
+      allow update: if isSuperAdmin() || isStaff() || isVenueManager(resource.data.get('venue_id', 'NONE'));
+      allow delete: if isSuperAdmin();
+    }
+
+    // Guest Lists
+    match /guest_lists/{guestId} {
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid || 
+        isSuperAdmin() || 
+        isStaff() || 
+        isVenueManager(resource.data.get('venueId', 'NONE'))
+      );
+      allow create: if isAuthenticated() && (isSuperAdmin() || isStaff() || isVenueManager(request.resource.data.get('venueId', 'NONE')));
+      allow update: if isAuthenticated() && (
+        isSuperAdmin() || 
+        isStaff() || 
+        isVenueManager(resource.data.get('venueId', 'NONE')) ||
+        (request.auth.uid == resource.data.userId && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']))
+      );
+      allow delete: if isSuperAdmin() || isVenueManager(resource.data.get('venueId', 'NONE'));
+    }
+
+    // Onboarding Content
+    match /onboarding_content/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+
+    // Transactions
+    match /transactions/{txId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (resource.data.user_id == request.auth.uid || isSuperAdmin());
+      allow update: if isSuperAdmin();
+      allow delete: if isSuperAdmin();
+    }
+
+    // Reusable Themes
+    match /themes/{themeId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+
+    // System Settings
+    match /system/{docId} {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+
+    // Connection Test
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // Presence
+    match /presence/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && isOwner(userId);
+    }
+
+    // Notifications
+    match /notifications/{notifId} {
+      allow read: if isAuthenticated() && (resource.data.targetUserId == request.auth.uid || isSuperAdmin());
+      allow write: if isAuthenticated();
+      allow delete: if isSuperAdmin();
+    }
+  }
+}

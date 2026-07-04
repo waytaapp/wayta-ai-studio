@@ -1,0 +1,11 @@
+{
+  "name": "Wayta: Order \u0026 Pay Throughput Engine – RBAC V1.0",
+  "description": "High-availability hospitality ticketing and bartender dashboard optimized for South African festivals and Cloud Run deployment. Features offline-resilient budget tracking and real-time P2P sync.",
+  "requestFramePermissions": [
+    
+    
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

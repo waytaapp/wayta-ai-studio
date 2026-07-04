@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Pulse Onboarding</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-zinc-50 font-sans text-zinc-900 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white max-w-lg w-full rounded-[2.5rem] border border-zinc-100 shadow-xl overflow-hidden flex flex-col p-8 sm:p-12 relative">
+    <!-- Progress Indicator -->
+    <div class="flex items-center gap-2 mb-10 w-full justify-center">
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-zinc-200 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-zinc-200 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-zinc-200 transition-all duration-300"></div>
+    </div>
+
+    <!-- Illustration / Visual -->
+    <div class="flex justify-center mb-8 relative">
+      <div class="absolute -inset-4 bg-emerald-100/40 rounded-full blur-2xl"></div>
+      <div class="w-24 h-24 bg-emerald-50 rounded-3xl flex items-center justify-center border border-emerald-100 shadow-sm relative">
+        <svg class="w-12 h-12 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Text content -->
+    <div class="text-center space-y-4 mb-10">
+      <h1 class="text-3xl font-black uppercase tracking-tight text-zinc-900">Welcome to Pulse</h1>
+      <p class="text-zinc-500 font-medium text-sm leading-relaxed max-w-md mx-auto">
+        Your instant digital admission pass and venue companion. Let's get your profile up and running so you can experience checkout speed with perfect transparency.
+      </p>
+    </div>
+
+    <!-- Process Highlight Cards -->
+    <div class="space-y-3 mb-10">
+      <div class="flex items-start gap-4 p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+        <div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold text-xs shrink-0">1</div>
+        <div>
+          <h4 class="font-bold text-xs text-zinc-850 uppercase tracking-wide">Quick Profile Onboarding</h4>
+          <p class="text-zinc-500 text-[11px] mt-0.5 leading-normal">Setup your basic identity and custom picture.</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-4 p-4 rounded-2xl bg-zinc-50 border border-zinc-100">
+        <div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold text-xs shrink-0">2</div>
+        <div>
+          <h4 class="font-bold text-xs text-zinc-850 uppercase tracking-wide">Preference Tailoring</h4>
+          <p class="text-zinc-500 text-[11px] mt-0.5 leading-normal">Choose your event preferences to get custom curated deals.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Navigation -->
+    <div class="flex flex-col gap-3">
+      <a href="./onboarding-step2-profile.html" class="w-full bg-emerald-600 hover:bg-emerald-750 text-white font-black uppercase py-4 rounded-2xl text-center text-xs tracking-wider transition-all shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 active:scale-[0.98]">
+        Let's Get Started
+      </a>
+      <p class="text-center text-[10px] text-zinc-400 font-medium">By proceeding, you agree to our dynamic standard policies.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preferences | Pulse Onboarding</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-zinc-50 font-sans text-zinc-900 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white max-w-lg w-full rounded-[2.5rem] border border-zinc-100 shadow-xl overflow-hidden flex flex-col p-8 sm:p-12 relative">
+    <!-- Progress Indicator -->
+    <div class="flex items-center gap-2 mb-10 w-full justify-center">
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-zinc-200 transition-all duration-300"></div>
+    </div>
+
+    <!-- Illustration / Preferences Icon -->
+    <div class="flex justify-center mb-6">
+      <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center border border-emerald-100 shadow-sm">
+        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="text-center space-y-2 mb-6">
+      <h2 class="text-2xl font-black uppercase tracking-tight text-zinc-900 mb-1">Tailor Your Feed</h2>
+      <p class="text-zinc-500 font-medium text-xs">Select your interest focal points for customized interactions.</p>
+    </div>
+
+    <!-- Choice Grid -->
+    <div class="grid grid-cols-2 gap-3 mb-8">
+      <button onclick="this.classList.toggle('border-emerald-600'); this.classList.toggle('bg-emerald-50/50'); this.classList.toggle('text-emerald-700')" class="border border-zinc-200 rounded-2xl p-4 text-left hover:border-emerald-600 hover:bg-emerald-50/20 transition-all duration-200 group">
+        <span class="block text-lg mb-1">🎟️</span>
+        <span class="block text-[10px] font-black uppercase tracking-wider text-zinc-400 group-hover:text-emerald-700">Concerts & Shows</span>
+      </button>
+      <button onclick="this.classList.toggle('border-emerald-600'); this.classList.toggle('bg-emerald-50/50'); this.classList.toggle('text-emerald-700')" class="border border-zinc-200 rounded-2xl p-4 text-left hover:border-emerald-600 hover:bg-emerald-50/20 transition-all duration-200 group border-emerald-600 bg-emerald-50/50 text-emerald-700">
+        <span class="block text-lg mb-1">🍔</span>
+        <span class="block text-[10px] font-black uppercase tracking-wider text-emerald-700">Food & Venue Ordering</span>
+      </button>
+      <button onclick="this.classList.toggle('border-emerald-600'); this.classList.toggle('bg-emerald-50/50'); this.classList.toggle('text-emerald-700')" class="border border-zinc-200 rounded-2xl p-4 text-left hover:border-emerald-600 hover:bg-emerald-50/20 transition-all duration-200 group">
+        <span class="block text-lg mb-1">⚽</span>
+        <span class="block text-[10px] font-black uppercase tracking-wider text-zinc-400 group-hover:text-emerald-700">Sporting Events</span>
+      </button>
+      <button onclick="this.classList.toggle('border-emerald-600'); this.classList.toggle('bg-emerald-50/50'); this.classList.toggle('text-emerald-700')" class="border border-zinc-200 rounded-2xl p-4 text-left hover:border-emerald-600 hover:bg-emerald-50/20 transition-all duration-200 group border-emerald-600 bg-emerald-50/50 text-emerald-700">
+        <span class="block text-lg mb-1">🍸</span>
+        <span class="block text-[10px] font-black uppercase tracking-wider text-emerald-700">Exclusive VIP Access</span>
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <div class="grid grid-cols-2 gap-4">
+      <a href="onboarding-step2-profile.html" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-600 font-bold uppercase py-4 rounded-2xl text-center text-xs tracking-wider transition-all">
+        Back
+      </a>
+      <a href="onboarding-step4-success.html" class="bg-emerald-600 hover:bg-emerald-770 text-white font-black uppercase py-4 rounded-2xl text-center text-xs tracking-wider transition-all shadow-lg shadow-emerald-600/10">
+        Complete
+      </a>
+    </div>
+  </div>
+</body>
+</html>

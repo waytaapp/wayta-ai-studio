@@ -1,0 +1,183 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+/* Wayta Signal Green design-system tokens (namespaced --wayta-*, --bg*, --fg*, --accent*) */
+@import "./styles/globals.css";
+
+.wayta-marker .marker-pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--color-primary);
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  border: 4px solid white;
+  box-shadow: 0 0 15px rgba(52, 211, 153, 0.5); /* emerald glow */
+}
+
+.wayta-marker .marker-pin::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  margin: 4px 0 0 4px;
+  background: #000;
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* Wayta Signal Green — light ("paper") */
+:root {
+  --background: #fafaf9; /* paper */
+  --on-background: #0a0a0a; /* ink-0 */
+  --surface: #ffffff;
+  --on-surface: #0a0a0a;
+  --on-surface-variant: #57534e; /* stone-600 */
+  --surface-container: #f5f5f4;
+  --surface-container-high: #e7e5e4;
+  --surface-container-highest: #d6d3d1;
+  --outline: #e7e5e4;
+  --outline-variant: #f5f5f4;
+  --primary: #059669; /* emerald-600 — light-mode accent */
+  --primary-container: #d1fae5; /* emerald-100 */
+  --on-primary-container: #065f46; /* emerald-800 */
+  --secondary: #047857; /* emerald-700 */
+}
+
+/* Wayta Signal Green — dark ("ink"), the canonical after-hours look */
+.dark, :root.dark {
+  --background: #0a0a0a; /* ink-0 */
+  --on-background: #fafaf9; /* ink-900 */
+  --surface: #0a0a0a;
+  --on-surface: #fafaf9;
+  --on-surface-variant: #a3a3a3; /* ink-700 */
+  --surface-container: #141414; /* ink-100 */
+  --surface-container-high: #1c1c1c; /* ink-200 */
+  --surface-container-highest: #262626; /* ink-300 */
+  --outline: #262626; /* ink-300 */
+  --outline-variant: #1c1c1c; /* ink-200 */
+  --primary: #34d399; /* emerald-400 — dark-mode accent */
+  --primary-container: #064e3b; /* emerald-900 */
+  --on-primary-container: #6ee7b7; /* emerald-300 */
+  --secondary: #6ee7b7; /* emerald-300 — replaces gold */
+}
+
+@theme {
+  --font-sans: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+
+  --color-primary: var(--primary);
+  --color-on-primary: #062014; /* deep green-black for text on emerald */
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  
+  --color-secondary: var(--secondary);
+  --color-on-secondary: #000000;
+  
+  --color-tertiary: #10b981;
+  --color-on-tertiary: #ffffff;
+  
+  --color-error: #ef4444;
+  --color-on-error: #ffffff;
+  --color-error-container: #450a0a;
+  --color-on-error-container: #fca5a5;
+
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-low: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  
+  --color-status-banner: var(--primary);
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+  body {
+    @apply bg-background text-on-background font-sans antialiased transition-colors duration-500 text-base leading-relaxed;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-on-background;
+  }
+
+  label {
+    @apply font-black uppercase tracking-widest text-[11px] text-primary mb-1.5 block px-1;
+  }
+
+  input, textarea, select {
+    @apply text-base;
+  }
+}
+
+.glass-card {
+  @apply bg-surface-container/80 backdrop-blur-xl border border-outline;
+}
+
+.amber-glow {
+  /* legacy class name; now the Signal Green emerald glow */
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.2);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+}
+
+/* Custom Admin Login Disabled Overlay and States */
+.admin-login-disabled-container {
+  position: relative !important;
+}
+
+.admin-login-disabled-element {
+  pointer-events: none !important;
+  opacity: 0.35 !important;
+  filter: grayscale(80%) !important;
+}
+
+.admin-login-disabled-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(1.5px) !important;
+  -webkit-backdrop-filter: blur(1.5px) !important;
+  cursor: not-allowed !important;
+  pointer-events: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 50 !important;
+}
+
+/* Light Mode Overlay */
+.light .admin-login-disabled-overlay {
+  background: rgba(255, 255, 255, 0.65) !important;
+}
+
+@keyframes blinkCaret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+
+
