@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AppShell } from '../components/layout/AppShell';
 import { Surface } from '../components/ui/Surface';
 import { Badge } from '../components/ui/Badge';
+import { Button } from '../components/ui/Button';
 
 type OrderStatus = 'new' | 'prepping' | 'ready' | 'collected';
 
@@ -93,6 +94,25 @@ export const StaffView: React.FC = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Bottom action rail */}
+        <div style={{
+          marginTop: 16, padding: '12px 16px', borderRadius: 'var(--r-lg)',
+          background: 'var(--bg-elev-1)', border: '1px solid var(--border)',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap',
+        }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <Button variant="ghost" size="sm" icon="bolt">Mark ready</Button>
+            <Button variant="ghost" size="sm" icon="check">Mark collected</Button>
+            <Button variant="ghost" size="sm" icon="warn">Flag issue</Button>
+            <Button variant="ghost" size="sm" icon="x">Refuse / 86</Button>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)' }}>
+            <span>Median prep <span style={{ color: 'var(--fg-1)', fontWeight: 700 }}>3:12</span></span>
+            <span>SLA <span style={{ color: '#facc15', fontWeight: 700 }}>92%</span></span>
+            <Button variant="primary" size="sm" iconRight="arrow">Call next runner</Button>
+          </div>
         </div>
       </div>
     </AppShell>

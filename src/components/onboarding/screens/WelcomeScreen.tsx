@@ -5,11 +5,27 @@ import { Icon } from '../../ui/Icon';
 
 export const WelcomeScreen: React.FC = () => (
   <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{
+      padding: '20px 22px', borderRadius: 20,
+      background: 'linear-gradient(160deg, var(--accent) 0%, var(--wayta-emerald-700) 100%)',
+      color: 'var(--fg-on-emerald)', marginBottom: 22,
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.18em' }}>
+          WAYTA / NIGHT.01
+        </span>
+        <Icon name="sparkle" size={18} />
+      </div>
+      <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 32, lineHeight: 1.05, marginTop: 18 }}>
+        Skip<br />the queue.
+      </div>
+    </div>
+
     <Eyebrow accent>● ON-SITE ORDER & PAY</Eyebrow>
-    <Title>Welcome to Wayta.</Title>
+    <Title>Order drinks. Pay on-site. Collect fast.</Title>
     <Lead>
-      Order drinks, secure tables and pay on-site at South Africa's nightlife venues.
-      Three steps from the door to the drink in your hand.
+      Built for clubs, lounges and festivals in Jo'burg and Pretoria. Three steps
+      from the door to the drink in your hand.
     </Lead>
 
     <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
