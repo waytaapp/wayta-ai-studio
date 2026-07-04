@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { collection, onSnapshot } from 'firebase/firestore';
 import { AppShell } from '../components/layout/AppShell';
 import { Surface } from '../components/ui/Surface';
 import { Badge } from '../components/ui/Badge';
 import { Icon } from '../components/ui/Icon';
 import { type SidebarItem } from '../components/layout/Sidebar';
+import { db, isFirebaseConfigured } from '../lib/firebase';
 
 const sidebarItems: SidebarItem[] = [
   { id: 'telemetry', label: 'Telemetry', icon: 'chart' },
@@ -14,14 +16,58 @@ const sidebarItems: SidebarItem[] = [
   { id: 'incidents', label: 'Incidents', icon: 'shield', badge: 2 },
 ];
 
-const venues = [
-  { name: 'Latitude Rooftop', covers: 312, gmv: 'R84.2k', prep: '3:12', status: 'ok' as const },
-  { name: 'And Club Rosebank', covers: 442, gmv: 'R142.3k', prep: '2:48', status: 'ok' as const },
-  { name: 'Kong Lounge', covers: 188, gmv: 'R38.1k', prep: '5:42', status: 'warn' as const },
-  { name: 'Loft @ Hatfield', covers: 92, gmv: 'R14.2k', prep: '8:20', status: 'stop' as const },
-  { name: 'Mootee Bar', covers: 64, gmv: 'R9.8k', prep: '3:02', status: 'ok' as const },
-  { name: 'Eight & Main', covers: 211, gmv: 'R56.7k', prep: '3:48', status: 'ok' as const },
+type VenueStatus = 'ok' | 'warn' | 'stop';
+
+interface VenueRow {
+  name: string;
+  covers: number;
+  gmv: string;
+  prep: string;
+  status: VenueStatus;
+}
+
+const mockVenues: VenueRow[] = [
+  { name: 'Latitude Rooftop', covers: 312, gmv: 'R84.2k', prep: '3:12', status: 'ok' },
+  { name: 'And Club Rosebank', covers: 442, gmv: 'R142.3k', prep: '2:48', status: 'ok' },
+  { name: 'Kong Lounge', covers: 188, gmv: 'R38.1k', prep: '5:42', status: 'warn' },
+  { name: 'Loft @ Hatfield', covers: 92, gmv: 'R14.2k', prep: '8:20', status: 'stop' },
+  { name: 'Mootee Bar', covers: 64, gmv: 'R9.8k', prep: '3:02', status: 'ok' },
+  { name: 'Eight & Main', covers: 211, gmv: 'R56.7k', prep: '3:48', status: 'ok' },
 ];
+
+function formatGmv(value: number): string {
+  return value >= 1000 ? `R${(value / 1000).toFixed(1)}k` : `R${value}`;
+}
+
+function toVenueStatus(status: unknown): VenueStatus {
+  return status === 'warn' || status === 'stop' ? status : 'ok';
+}
+
+function useVenues(): VenueRow[] {
+  const [venues, setVenues] = useState<VenueRow[]>(mockVenues);
+
+  useEffect(() => {
+    if (!isFirebaseConfigured || !db) return;
+
+    const unsubscribe = onSnapshot(collection(db, 'venues'), (snapshot) => {
+      const rows: VenueRow[] = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          name: data.name ?? doc.id,
+          covers: typeof data.covers === 'number' ? data.covers : 0,
+          gmv: formatGmv(typeof data.gmv === 'number' ? data.gmv : 0),
+          prep: data.p95Prep ?? '—',
+          status: toVenueStatus(data.status === 'live' ? 'ok' : data.status),
+        };
+      });
+      if (rows.length > 0) setVenues(rows);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  return venues;
+}
 
 const paymentRails = [
   { name: 'Stitch', uptime: '99.8%', status: 'ok' as const },
@@ -32,6 +78,7 @@ const paymentRails = [
 
 export const AdminView: React.FC = () => {
   const [view, setView] = useState('telemetry');
+  const venues = useVenues();
 
   return (
     <AppShell role="admin" currentView={view} onNavigate={setView} venueName="Platform Ops" sidebarItems={sidebarItems}>

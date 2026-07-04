@@ -5,6 +5,7 @@ import { Badge } from '../components/ui/Badge';
 import { ProgressBar } from '../components/ui/ProgressBar';
 import { Button } from '../components/ui/Button';
 import { useOverlay } from '../contexts/OverlayContext';
+import { generateNudge } from '../lib/genai';
 
 const venues = [
   { name: 'Latitude Rooftop', status: 'Busy', dist: '0.3 km', area: 'Rooftop bar · Sandton', emoji: '🌆' },
@@ -29,11 +30,17 @@ export const PatronView: React.FC = () => {
     overlay.toast({ type: 'success', title: 'Order placed!', description: 'Heineken ×2 added to tab #142.' });
   }, [overlay]);
 
-  const showNudgeDemo = useCallback(() => {
+  const showNudgeDemo = useCallback(async () => {
+    const generated = await generateNudge({
+      venueName: 'And Club Rosebank',
+      recentOrders: ['Heineken', 'Savanna Dry'],
+      budgetRemaining: budgetMax - budget,
+    });
+
     overlay.showNudge({
-      title: 'Bundle & save',
-      description: 'You usually get Heineken. Bundle 2 shots, save R20.',
-      confidence: 0.84,
+      title: generated?.title ?? 'Bundle & save',
+      description: generated?.description ?? 'You usually get Heineken. Bundle 2 shots, save R20.',
+      confidence: generated?.confidence ?? 0.84,
       acceptLabel: 'Add bundle',
       dismissLabel: 'No thanks',
       onAccept: () => overlay.toast({ type: 'success', title: 'Bundle added!', description: 'R20 saved on this round.' }),
