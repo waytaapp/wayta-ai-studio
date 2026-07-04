@@ -1,5 +1,14 @@
+kind: "AppHostingYaml"
+apiVersion: "v1"
+runConfig:
+  concurrency: 80
+  cpu: 1
+  memory: "512Mi"
+scripts:
+  build: "npm run build:server"
+  run: "npm run start"
 env:
-  - variable: VITE_FIREBASE_PROJECT_ID
-    value: wayta-rbac-v10
-  - variable: VITE_FIREBASE_DATABASE_ID
-    value: ai-studio-2ea8ff24-bbdd-46a8-a8a7-b0e54e4ae964
+  - variable: NODE_ENV
+    value: production
+  - variable: PORT
+    value: "3000"

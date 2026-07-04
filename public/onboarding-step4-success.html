@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verification Success | Pulse Onboarding</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-zinc-50 font-sans text-zinc-900 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white max-w-lg w-full rounded-[2.5rem] border border-zinc-100 shadow-xl overflow-hidden flex flex-col p-8 sm:p-12 relative">
+    <!-- Progress Indicator -->
+    <div class="flex items-center gap-2 mb-10 w-full justify-center">
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+      <div class="h-1.5 w-12 rounded-full bg-emerald-600 transition-all duration-300"></div>
+    </div>
+
+    <!-- Celebration Success Micro-graphics -->
+    <div class="flex justify-center mb-8 relative">
+      <div class="absolute -inset-10 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
+      <div class="w-24 h-24 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white shadow-2xl relative">
+        <svg class="w-12 h-12 text-white animate-bounce-slow" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Core Messaging -->
+    <div class="text-center space-y-4 mb-10">
+      <h2 class="text-3xl font-black uppercase tracking-tight text-zinc-900">Pass Activated!</h2>
+      <p class="text-zinc-500 font-medium text-sm leading-relaxed max-w-sm mx-auto">
+        Congratulations! Your digital credentials are fully authenticated. Instant gate scanning, menu routing, and NFC transactions are now ready on your account.
+      </p>
+    </div>
+
+    <!-- Activated Features List -->
+    <div class="space-y-3.5 bg-zinc-50 p-6 rounded-3xl border border-zinc-100-variant/10 mb-10">
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-xs font-bold text-zinc-700">Admission Ticket Generator Online</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-xs font-bold text-zinc-700">Digital Wallet & NFC Ordering Enabled</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-xs font-bold text-zinc-700">Audited Security Rules Compliant</span>
+      </div>
+    </div>
+
+    <!-- Finish Action Button -->
+    <div class="flex flex-col gap-3">
+      <a href="/" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase py-4 rounded-2xl text-center text-xs tracking-wider transition-all shadow-lg shadow-emerald-600/20 active:scale-[0.98]">
+        Enter Pulse Dashboard
+      </a>
+    </div>
+  </div>
+</body>
+</html>

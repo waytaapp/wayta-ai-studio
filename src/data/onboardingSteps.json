@@ -1,0 +1,71 @@
+{
+  "PATRON": [
+    {
+      "id": "patron_step_1",
+      "targetId": "venue_selection_list",
+      "title": "Find Your Vibe",
+      "content": "Browse through South Africa's top venues and festivals. Select where you are to see the menu.",
+      "persona": "PATRON"
+    },
+    {
+      "id": "patron_step_2",
+      "targetId": "place_order_btn",
+      "title": "Skip the Queue",
+      "content": "Order your drinks directly from your phone. No more waiting at the bar.",
+      "persona": "PATRON"
+    },
+    {
+      "id": "patron_step_3",
+      "targetId": "budget-tracker-nav",
+      "title": "Party Smart",
+      "content": "Keep track of your spending with the Party Statement budget tracker.",
+      "persona": "PATRON"
+    }
+  ],
+  "BARTENDER": [
+    {
+      "id": "bartender_step_1",
+      "targetId": "order_queue_list",
+      "title": "Incoming Orders",
+      "content": "All orders from patrons appear here in real-time. Speed is key!",
+      "persona": "BARTENDER"
+    },
+    {
+      "id": "bartender_step_2",
+      "targetId": "status_toggle_btn",
+      "title": "Manage Progress",
+      "content": "Mark drinks as 'In Progress' so patrons know you're on it.",
+      "persona": "BARTENDER"
+    },
+    {
+      "id": "bartender_step_3",
+      "targetId": "collection_ready_btn",
+      "title": "Notify Patron",
+      "content": "Trigger 'Collection Ready' notifications to let patrons know their drinks are ready.",
+      "persona": "BARTENDER"
+    }
+  ],
+  "MANAGER": [
+    {
+      "id": "manager_step_1",
+      "targetId": "sales_metrics_grid",
+      "title": "Real-time Metrics",
+      "content": "Monitor your revenue, volume, and peak hours at a glance.",
+      "persona": "MANAGER"
+    },
+    {
+      "id": "manager_step_2",
+      "targetId": "inventory-nav",
+      "title": "Menu Management",
+      "content": "Update your menu, stock levels, and pricing in seconds.",
+      "persona": "MANAGER"
+    },
+    {
+      "id": "manager_step_3",
+      "targetId": "data-feed",
+      "title": "Consumer Insights",
+      "content": "View the Consumer Behavior Data Feed to understand your audience better.",
+      "persona": "MANAGER"
+    }
+  ]
+}

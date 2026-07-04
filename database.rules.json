@@ -1,0 +1,97 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth != null",
+      ".indexOn": ["assigned_venue_id", "assigned_event_id", "username", "role"],
+      "$user_id": {
+        ".read": "auth != null && (auth.uid === $user_id || auth.token.role === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN')",
+        ".write": "auth != null && (auth.uid === $user_id || auth.token.role === 'super_admin' || root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN')",
+        "pin": { ".validate": "newData.isString() && newData.val().matches(/^[0-9]{6}$/)" },
+        "username": { ".validate": "newData.isString() && newData.val().length > 0" }
+      }
+    },
+    "presence": {
+      "$user_id": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === $user_id"
+      }
+    },
+    "live_orders": {
+      "$venue_id": {
+        ".read": "auth != null",
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('venue_id').val() === $venue_id || auth.token.role === 'super_admin')"
+      }
+    },
+    "venue_managers": {
+      ".indexOn": ["username", "assigned_venue_id"],
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN' || auth.token.role === 'super_admin' || auth.uid === 'demo-admin')",
+        ".write": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN' || auth.token.role === 'super_admin' || auth.uid === 'demo-admin')"
+      }
+    },
+    "venues": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$venueId": {
+        "products": {
+          ".read": "auth != null",
+          ".write": "auth != null"
+        },
+        "events": {
+          ".read": "auth != null",
+          ".write": "auth != null"
+        },
+        "vendors": {
+          ".read": "auth != null",
+          ".write": "auth != null"
+        },
+        "menus": {
+          ".read": "auth != null",
+          ".write": "auth != null",
+          ".indexOn": ["category", "price"]
+        }
+      }
+    },
+    "orders": {
+      ".write": "auth != null",
+      ".indexOn": ["user_id", "venue_id", "timestamp"],
+      "$venueId": {
+        ".read": "auth != null && (root.child('users').child(auth.uid).child('assigned_venue_id').val() === $venueId || root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN' || auth.token.role === 'super_admin' || auth.uid === 'demo-admin')",
+        "$orderId": {
+          ".write": "auth != null"
+        }
+      }
+    },
+    "transactions": {
+      ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN' || auth.token.role === 'super_admin' || auth.uid === 'demo-admin')",
+      ".write": "auth != null",
+      ".indexOn": ["user_id", "timestamp"],
+      "$txId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "onboarding_requests": {
+      ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN' || auth.token.role === 'super_admin' || auth.uid === 'demo-admin')",
+      "$request_id": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+    "email_templates": {
+      ".read": "auth != null",
+      ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN' || auth.token.role === 'super_admin' || auth.uid === 'demo-admin')",
+      ".indexOn": ["name"]
+    },
+    "mail": {
+      ".read": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'SUPER_ADMIN' || auth.token.role === 'super_admin' || auth.uid === 'demo-admin')",
+      ".write": "auth != null"
+    },
+    "active_sessions": {
+      "$user_id": {
+        ".read": "auth != null && (auth.uid === $user_id || auth.token.role === 'super_admin')",
+        ".write": "auth != null && (auth.uid === $user_id || auth.token.role === 'super_admin')"
+      }
+    }
+  }
+}
