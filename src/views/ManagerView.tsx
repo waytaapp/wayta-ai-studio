@@ -4,6 +4,7 @@ import { Surface } from '../components/ui/Surface';
 import { Badge } from '../components/ui/Badge';
 import { Icon } from '../components/ui/Icon';
 import { type SidebarItem } from '../components/layout/Sidebar';
+import { MenuStockEditor } from '../components/menu/MenuStockEditor';
 
 const sidebarItems: SidebarItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: 'grid' },
@@ -26,6 +27,10 @@ export const ManagerView: React.FC = () => {
   return (
     <AppShell role="manager" currentView={view} onNavigate={setView} venueName="Latitude Rooftop" sidebarItems={sidebarItems}>
       <div style={{ padding: '24px', maxWidth: 960, margin: '0 auto' }}>
+        {view === 'inventory' ? (
+          <MenuStockEditor />
+        ) : (
+          <>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
           <div>
@@ -146,6 +151,8 @@ export const ManagerView: React.FC = () => {
             ))}
           </div>
         </div>
+          </>
+        )}
       </div>
     </AppShell>
   );

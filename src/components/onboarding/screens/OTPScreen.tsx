@@ -1,6 +1,7 @@
 import { Eyebrow } from '../../ui/Eyebrow';
 import { Title } from '../../ui/Title';
 import { Lead } from '../../ui/Lead';
+import { Icon } from '../../ui/Icon';
 
 export interface OTPScreenProps {
   phone: string;
@@ -72,6 +73,22 @@ export const OTPScreen: React.FC<OTPScreenProps> = ({ phone, digits, onChange })
             )}
           </div>
         ))}
+      </div>
+
+      <div style={{
+        marginTop: 14, display: 'flex', alignItems: 'flex-start', gap: 10,
+        padding: '12px 14px',
+        background: 'var(--bg-emerald-soft)',
+        border: '1px solid var(--border-emerald)', borderRadius: 12,
+        color: 'var(--fg-2)', fontSize: 13, lineHeight: 1.45,
+      }}>
+        <div style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 1 }}>
+          <Icon name="bolt" size={16} stroke={2.2} />
+        </div>
+        <div>
+          <div style={{ color: 'var(--fg)', fontWeight: 700 }}>SMS auto-fill ready</div>
+          <div>iOS will paste the code as soon as it arrives.</div>
+        </div>
       </div>
 
       <div style={{
