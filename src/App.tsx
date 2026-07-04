@@ -16,7 +16,7 @@ import { AdminView } from './views/AdminView';
 function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <OverlayProvider>
           <UpdatePrompt />
           <OfflineSync />
