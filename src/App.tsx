@@ -152,8 +152,7 @@ export default function App() {
       setView('payment-notification');
     } else if (path === '/order-tracking') {
       setView('orders');
-    } else if (path === '/onboarding') {
-      setView('onboarding');
+    } else if (path === '/' || path === '/onboarding') {      setView('onboarding');
     }
   }, []);
 
