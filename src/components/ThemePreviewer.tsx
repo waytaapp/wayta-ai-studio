@@ -189,7 +189,7 @@ export const ThemePreviewer: React.FC<ThemePreviewerProps> = ({ venues, onThemeS
     if (isBgDark) {
       // If dark background, force primary & text to be bright and high contrast
       if (calculateContrastRatio(correctedPrimary, currentTheme.backgroundColor) < 4.5) {
-        correctedPrimary = '#34d399'; // Wayta Signal Green
+        correctedPrimary = '#39FF14'; // Wayta Vibrant Green
       }
       if (calculateContrastRatio(correctedText, currentTheme.backgroundColor) < 4.5) {
         correctedText = '#FFFFFF';
@@ -978,7 +978,7 @@ export const ThemePreviewer: React.FC<ThemePreviewerProps> = ({ venues, onThemeS
 
               {/* Wayta Logo Brand Header Guard (Wayta Brand Cohesion) */}
               <div className="border-b border-white/5 py-1.5 px-4 flex justify-between items-center bg-black/40 backdrop-blur-md z-20">
-                <span className="text-[10px] font-black tracking-widest text-primary flex items-center gap-1">
+                <span className="text-[10px] font-black tracking-widest text-[#39FF14] flex items-center gap-1">
                   ⚡ WAYTA
                 </span>
                 <span className="text-[8px] font-bold uppercase tracking-widest opacity-60 flex items-center gap-1">
@@ -1143,7 +1143,7 @@ export const ThemePreviewer: React.FC<ThemePreviewerProps> = ({ venues, onThemeS
                     {/* Budget Protection Alert */}
                     <div className={`p-4 border border-white/5 space-y-3 ${getRadiusClass()}`} style={{ backgroundColor: currentTheme.cardColor }}>
                       <div className="flex items-center justify-between">
-                        <span className="text-[9px] font-black uppercase tracking-widest text-primary">🛡️ Party Statement Shield</span>
+                        <span className="text-[9px] font-black uppercase tracking-widest text-[#39FF14]">🛡️ Party Statement Shield</span>
                         <span className="text-[8px] font-mono opacity-60">Verified Guard</span>
                       </div>
                       

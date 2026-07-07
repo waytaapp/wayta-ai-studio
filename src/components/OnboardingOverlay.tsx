@@ -116,7 +116,7 @@ export const OnboardingOverlay: React.FC<OnboardingOverlayProps> = ({
             height={spotlightRect.height + 24}
             rx="16"
             fill="none"
-            stroke="var(--primary)"
+            stroke="white"
             strokeWidth="2"
             strokeDasharray="4 4"
             className="animate-[spin_8s_linear_infinite]"
@@ -150,15 +150,15 @@ export const OnboardingOverlay: React.FC<OnboardingOverlayProps> = ({
             transform: 'translate(-50%, -50%)',
             zIndex: 10000
           }}
-          className="pointer-events-auto w-[calc(100vw-32px)] md:w-full md:max-w-sm bg-surface-container/90 backdrop-blur-3xl rounded-[2rem] p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-outline overflow-hidden"
+          className="pointer-events-auto w-[calc(100vw-32px)] md:w-full md:max-w-sm bg-white/60 backdrop-blur-3xl rounded-[2rem] p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/60 overflow-hidden"
         >
           {/* Soft Brand Signature Gradient */}
-          <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-secondary/10 blur-[60px] rounded-full pointer-events-none" />
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-400/10 blur-[60px] rounded-full pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/10 blur-[60px] rounded-full pointer-events-none" />
 
-          <button
+          <button 
             onClick={onComplete}
-            className="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface transition-colors z-20"
+            className="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors z-20"
           >
             <X size={18} />
           </button>
@@ -166,41 +166,41 @@ export const OnboardingOverlay: React.FC<OnboardingOverlayProps> = ({
           <div className="space-y-4 sm:space-y-6 relative z-10">
             <div className="space-y-3 sm:space-y-4 max-h-[35vh] sm:max-h-[40vh] overflow-y-auto custom-scrollbar pr-1">
               <div className="space-y-2 sm:space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-container border border-primary/30 rounded-full">
-                  <span className="text-[10px] font-bold font-mono text-on-primary-container uppercase tracking-widest">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-50 border border-cyan-100 rounded-full">
+                  <span className="text-[10px] font-bold text-cyan-700 uppercase tracking-widest">
                     Step {currentStepIndex + 1} / {steps.length}
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black font-display text-on-surface leading-none tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-black text-gray-900 leading-none tracking-tight">
                   {currentStep.title}
                 </h3>
               </div>
-
-              <p className="text-sm sm:text-base text-on-surface-variant font-medium leading-relaxed">
+              
+              <p className="text-sm sm:text-base text-gray-600 font-medium leading-relaxed">
                 {currentStep.content}
               </p>
             </div>
 
-            <div className="flex items-center justify-between pt-4 sm:pt-6 border-t border-outline-variant">
+            <div className="flex items-center justify-between pt-4 sm:pt-6 border-t border-gray-100">
               <button
                 onClick={onComplete}
-                className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors"
+                className="text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors"
               >
-                Skip
+                Skip 
               </button>
 
               <div className="flex gap-2">
                 {currentStepIndex > 0 && (
                   <button
                     onClick={handleBack}
-                    className="w-12 h-12 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline text-on-surface-variant hover:text-on-surface transition-all active:scale-90"
+                    className="w-12 h-12 flex items-center justify-center rounded-2xl bg-gray-50 border border-gray-100 text-gray-400 hover:text-gray-900 transition-all active:scale-90"
                   >
                     <ChevronLeft size={20} />
                   </button>
                 )}
                 <button
                   onClick={handleNext}
-                  className="bg-primary text-on-primary h-12 px-8 rounded-2xl font-bold text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/20"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white h-12 px-8 rounded-2xl font-bold text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-cyan-500/20"
                 >
                   {currentStepIndex === steps.length - 1 ? 'Finish' : 'Next'}
                   <ChevronRight size={16} />

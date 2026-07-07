@@ -1,6 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import { serializeError } from '../lib/utils';
 
 interface Props {
   children: ReactNode;
@@ -23,12 +22,6 @@ export class SystemErrorBoundary extends Component<Props, State> {
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('CRITICAL_SYSTEM_FAILURE:', error, errorInfo);
-    try {
-      const details = serializeError(error);
-      console.error('🔍 CRITICAL_SYSTEM_FAILURE_DETAILS:', JSON.stringify(details, null, 2));
-    } catch (e) {
-      console.error('🔍 CRITICAL_SYSTEM_FAILURE_OBJECT (Not Stringifiable):', error);
-    }
   }
 
   private handleReset = () => {
@@ -65,7 +58,7 @@ export class SystemErrorBoundary extends Component<Props, State> {
             </button>
             
             <button 
-              onClick={() => window.location.href = import.meta.env.BASE_URL}
+              onClick={() => window.location.href = '/'}
               className="w-full h-16 bg-surface-container text-on-surface-variant rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 border border-outline active:scale-95 transition-all"
             >
               <Home size={20} />

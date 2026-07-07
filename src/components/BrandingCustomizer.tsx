@@ -103,7 +103,7 @@ export const BrandingCustomizer: React.FC<BrandingCustomizerProps> = ({
     const isBgDark = getRelativeLuminance(currentTheme.backgroundColor) < 0.5;
     
     // Shift primary color towards high contrast
-    const correctedPrimary = isBgDark ? '#34d399' : '#065f46'; // Signal Green emerald or deep emerald
+    const correctedPrimary = isBgDark ? '#39FF14' : '#14532D'; // green neon or dark forest green
     const correctedText = isBgDark ? '#FFFFFF' : '#000000';
     
     setCurrentTheme(prev => ({
@@ -270,7 +270,7 @@ export const BrandingCustomizer: React.FC<BrandingCustomizerProps> = ({
                     type="text"
                     value={currentTheme.primaryColor}
                     onChange={(e) => handleFieldChange('primaryColor', e.target.value)}
-                    placeholder="#34d399"
+                    placeholder="#39FF14"
                     className="flex-1 h-11 bg-background border border-outline rounded-xl px-4 text-xs font-semibold font-mono uppercase outline-none focus:border-primary transition-all"
                   />
                 </div>
@@ -293,7 +293,7 @@ export const BrandingCustomizer: React.FC<BrandingCustomizerProps> = ({
                     type="text"
                     value={currentTheme.secondaryColor}
                     onChange={(e) => handleFieldChange('secondaryColor', e.target.value)}
-                    placeholder="#6ee7b7"
+                    placeholder="#FFD700"
                     className="flex-1 h-11 bg-background border border-outline rounded-xl px-4 text-xs font-semibold font-mono uppercase outline-none focus:border-primary transition-all"
                   />
                 </div>
@@ -630,7 +630,7 @@ export const BrandingCustomizer: React.FC<BrandingCustomizerProps> = ({
 
               {/* Wayta Top Branding Guard (Wayta Brand Cohesion element) */}
               <div className="border-b border-white/5 py-1.5 px-4 flex justify-between items-center bg-black/40 backdrop-blur-md z-20">
-                <span className="text-[10px] font-black tracking-widest text-primary flex items-center gap-1">
+                <span className="text-[10px] font-black tracking-widest text-[#39FF14] flex items-center gap-1">
                   ⚡ WAYTA
                 </span>
                 <span className="text-[8px] font-bold uppercase tracking-widest opacity-60 flex items-center gap-1">
@@ -759,7 +759,7 @@ export const BrandingCustomizer: React.FC<BrandingCustomizerProps> = ({
 
                     {/* Party Statement / Budget Shield mockup */}
                     <div className={`p-4 border border-white/5 space-y-3 ${getRadiusClass()}`} style={{ backgroundColor: currentTheme.cardColor }}>
-                      <span className="text-[9px] font-black uppercase tracking-widest text-primary block">🛡️ Party Statement Protection</span>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-[#39FF14] block">🛡️ Party Statement Protection</span>
                       
                       <div className="space-y-1 text-[9px] font-mono">
                         <div className="flex justify-between">

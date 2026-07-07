@@ -20,12 +20,9 @@ export const AdminLoginOverlay: React.FC<AdminLoginOverlayProps> = ({ onSuccess,
     setIsLoading(true);
     setError('');
 
-    // Credentials come from build-time env (VITE_ADMIN_USERNAME / VITE_ADMIN_PASSWORD);
-    // when unset, this overlay rejects everything.
-    const adminUsername = import.meta.env.VITE_ADMIN_USERNAME || '';
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || '';
+    // Default credentials: Admin / Wayta_accEsS
     setTimeout(() => {
-      if (adminUsername && adminPassword && username === adminUsername && password === adminPassword) {
+      if (username === 'Admin' && password === 'Wayta_accEsS') {
         sessionStorage.setItem('admin_verified', 'true');
         onSuccess();
       } else {

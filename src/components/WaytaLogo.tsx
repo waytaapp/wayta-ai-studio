@@ -12,7 +12,7 @@ export const WaytaLogo: React.FC<WaytaLogoProps> = ({
 }) => {
   return (
     <img 
-      src={`${import.meta.env.BASE_URL}oglogo.png`} 
+      src="/oglogo.png" 
       alt="Wayta Logo"
       className={cn("object-contain", className)}
       style={{ 

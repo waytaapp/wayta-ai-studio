@@ -235,7 +235,7 @@ export const OrderStatusScreen: React.FC<OrderStatusScreenProps> = ({ orderId })
                 level="H"
                 includeMargin={false}
                 imageSettings={{
-                  src: `${import.meta.env.BASE_URL}favicon.png`, 
+                  src: "/favicon.ico", 
                   x: undefined,
                   y: undefined,
                   height: 40,
