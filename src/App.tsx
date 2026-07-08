@@ -101,8 +101,10 @@ export default function App() {
   const activeUser = impersonatedUser || currentUser;
   const [showScanner, setShowScanner] = useState(false);
   const [loadingVenues, setLoadingVenues] = useState(true);
-  const [view, setView] = useState<'onboarding' | 'auth' | 'explore' | 'venue' | 'budget' | 'safety' | 'manager' | 'profile' | 'tracking' | 'admin' | 'admin-super' | 'business-onboarding' | 'onboarding-new' | 'orders' | 'tickets' | 'workflow' | 'wayta-menu' | 'wayta-checkout' | 'staff-dashboard' | 'event-dashboard' | 'event-admin-dashboard' | 'waiter-dashboard' | 'vendor-dashboard' | 'payment-authorization' | 'payment-notification' | 'patron-event' | 'public-events' | 'public-event-detail' | 'audit' | 'quick-tour'>('auth');
-  const [isSimulatedOffline, setIsSimulatedOffline] = useState(false);
+const [view, setView] = useState<'onboarding' | 'auth' | 'explore' | 'venue' | 'budget' | 'safety' | 'manager' | 'profile' | 'tracking' | 'admin' | 'admin-super' | 'business-onboarding' | 'onboarding-new' | 'orders' | 'tickets' | 'workflow' | 'wayta-menu' | 'wayta-checkout' | 'staff-dashboard' | 'event-dashboard' | 'event-admin-dashboard' | 'waiter-dashboard' | 'vendor-dashboard' | 'payment-authorization' | 'payment-notification' | 'patron-event' | 'public-events' | 'public-event-detail' | 'audit' | 'quick-tour'>(() => {
+    const hasCompleted = localStorage.getItem('wayta_initial_onboarding_complete');
+    return hasCompleted ? 'auth' : 'onboarding';
+});const [isSimulatedOffline, setIsSimulatedOffline] = useState(false);
   const [isVerificationPending, setIsVerificationPending] = useState(false);
   const [redirectAfterAuth, setRedirectAfterAuth] = useState<{ view: any, eventId?: string } | null>(null);
   const [currentEventId, setCurrentEventId] = useState<string | null>(null);
@@ -1244,8 +1246,7 @@ export default function App() {
               />
             )}
             {view === 'wayta-checkout' && <WaytaCheckout onComplete={() => setView('payment-notification')} />}
-            {view === 'onboarding' && <OnboardingView onComplete={() => setView('auth')} onExit={() => setView('auth')} />}
-            {view === 'business-onboarding' && <BusinessOnboardingView onBack={() => setView('onboarding')} />}
+          {view === 'onboarding' && <OnboardingView onComplete={() => { localStorage.setItem('wayta_initial_onboarding_complete', 'true'); setView('auth'); }} onExit={() => { localStorage.setItem('wayta_initial_onboarding_complete', 'true'); setView('auth'); }} />}            {view === 'business-onboarding' && <BusinessOnboardingView onBack={() => setView('onboarding')} />}
             {view === 'auth' && <AuthView onLogin={handleLoginSuccess} onExplore={() => setView('public-events')} theme={themeMode} onToggleTheme={toggleTheme} onPartnerClick={switchMode} isAdminLoginEnabled={isAdminLoginEnabled} isSystemLocked={isSystemLocked} isLoginDebugDisabled={isLoginDebugDisabled} isPatronFastTrackDisabled={isPatronFastTrackDisabled} isAuthFlowSelectorHidden={isAuthFlowSelectorHidden} venues={venues} onStartTour={() => setView('quick-tour')} />}
             {view === 'patron-event' && currentEventId && (
               <PatronEventView 
