@@ -13,7 +13,7 @@ export const Welcome: React.FC<ScreenProps> = ({ theme }) => {
       <Lead theme={theme}>Order drinks, secure tables and pay on-site at South Africa's nightlife venues. Three steps from the door to the drink in your hand.</Lead>
       <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
         {[{ n: '01', t: 'Locate', d: 'Auto-detect your venue.' }, { n: '02', t: 'Order & Pay', d: 'One tap from cart.' }, { n: '03', t: 'Collect', d: 'Skip the bar line.' }].map(s => (
-          <div key={digit-${s.n}} style={{ padding: '14px 14px 16px', background: c.surface, border: `1px solid ${c.border}`, borderRadius: 14 }}>
+          <div key={`digit-${s.n}`} style={{ padding: '14px 14px 16px', background: c.surface, border: `1px solid ${c.border}`, borderRadius: 14 }}>
             <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: '0.18em', color: c.accent, fontWeight: 700 }}>{s.n}</div>
             <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: 16, color: c.fg, marginTop: 4, letterSpacing: '-0.01em' }}>{s.t}</div>
             <div style={{ fontSize: 12.5, color: c.fg2, marginTop: 3, lineHeight: 1.4 }}>{s.d}</div>
