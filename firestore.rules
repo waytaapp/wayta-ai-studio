@@ -215,6 +215,19 @@ match /orders-venue/{venueId} {
       allow read: if isAuthenticated() && (resource.data.targetUserId == request.auth.uid || isSuperAdmin());
       allow write: if isAuthenticated();
       allow delete: if isSuperAdmin();
+
+
+    // 6. Tickets Matrix
+    match /tickets/{ticketId} {
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() ||
+        isStaff() ||
+        isVenueManager(resource.data.venue_id)
+      );
+      allow create: if isSuperAdmin() || isVenueManager(request.resource.data.get('venue_id', 'NONE'));
+      allow update: if isSuperAdmin() || isVenueManager(resource.data.venue_id);
+      allow delete: if isSuperAdmin();
+    }
     }
   }
 }
