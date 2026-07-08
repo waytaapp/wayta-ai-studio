@@ -122,6 +122,20 @@ service cloud.firestore {
       allow delete: if isSuperAdmin();
     }
 
+// 4a. Orders by Venue (denormalized venue-specific order queues)
+match /orders-venue/{venueId} {
+  allow read: if isAuthenticated() && (isSuperAdmin() || isVenueManager(venueId));
+  allow create: if isAuthenticated() && (isSuperAdmin() || isVenueManager(venueId));
+  allow update: if isSuperAdmin() || isVenueManager(venueId);
+  allow delete: if isSuperAdmin();
+
+  match /{orderId} {
+    allow read: if isAuthenticated() && (isSuperAdmin() || isVenueManager(venueId) || request.auth.uid == resource.data.user_id);
+    allow write: if isSuperAdmin() || isVenueManager(venueId);
+    allow delete: if isSuperAdmin();
+  }
+}
+
     // 5. Audit Logging Engine
     match /admin_audit_logs/{logId} {
       allow read: if isSuperAdmin();
