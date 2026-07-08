@@ -1,4 +1,4 @@
-import React from 'react';
+himport React from 'react';
 import { Theme, palette, fonts } from './theme';
 import { Icon, Eyebrow, Title, Lead } from './ui';
 
