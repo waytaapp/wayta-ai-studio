@@ -15,7 +15,7 @@ export const Location: React.FC<ScreenProps> = ({ theme }) => {
       <div style={{ marginTop: 24, height: 200, borderRadius: 16, background: c.surface, border: `1px solid ${c.border}`, position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(${c.border} 1px, transparent 1px),linear-gradient(90deg, ${c.border} 1px, transparent 1px)`, backgroundSize: '24px 24px', opacity: 0.55 }} />
         {pins.map((v, i) => (
-          <div key={ih} style={{ position: 'absolute', left: v.x, top: v.y, transform: 'translate(-50%,-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+          <div key={v.name} style={{ position: 'absolute', left: v.x, top: v.y, transform: 'translate(-50%,-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
             <div style={{ width: v.active ? 14 : 10, height: v.active ? 14 : 10, borderRadius: 999, background: v.active ? c.accent : c.fg3, boxShadow: v.active ? `0 0 0 6px ${c.accentSoft}` : 'none', border: `2px solid ${c.surface}` }} />
             <div style={{ fontFamily: fonts.mono, fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', color: v.active ? c.accent : c.fg3 }}>{v.name}</div>
           </div>
@@ -25,7 +25,7 @@ export const Location: React.FC<ScreenProps> = ({ theme }) => {
       </div>
       <div style={{ marginTop: 18, padding: '14px 16px', background: c.surface, border: `1px solid ${c.border}`, borderRadius: 14 }}>
         {[{ icon: 'pin' as const, title: 'Used only at venues', body: "We check your location when you open the app inside a partner venue. Nowhere else." }, { icon: 'shield' as const, title: 'Never shared', body: "Your dot doesn't appear to other patrons. Only your invited crew sees you on the map." }].map((row, i, arr) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, paddingBottom: i === arr.length - 1 ? 0 : 14, paddingTop: i === 0 ? 0 : 14, borderBottom: i === arr.length - 1 ? 'none' : `1px solid ${c.border}` }}>
+          <div key={row.icon} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, paddingBottom: i === arr.length - 1 ? 0 : 14, paddingTop: i === 0 ? 0 : 14, borderBottom: i === arr.length - 1 ? 'none' : `1px solid ${c.border}` }}>
             <div style={{ width: 30, height: 30, borderRadius: 9, background: c.accentSoft, color: c.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Icon name={row.icon} size={15} stroke={2} /></div>
             <div><div style={{ fontSize: 13, fontWeight: 700, color: c.fg }}>{row.title}</div><div style={{ fontSize: 12.5, color: c.fg2, lineHeight: 1.45, marginTop: 2 }}>{row.body}</div></div>
           </div>
