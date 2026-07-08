@@ -652,13 +652,13 @@ export default function App() {
     const staffRoles = ['BARTENDER', 'STAFF', 'WAITER'];
     if (staffRoles.includes(user.role) && !user.is_profile_complete) {
         setShowStaffCredentialsOverlay(true);
-        return; // Pause auto-routing until onboarding is done
     }
 
     // Trigger Onboarding if first time for this role
     const hasSeenOnboarding = localStorage.getItem(`has_seen_onboarding_${user.role}`);
     if (!hasSeenOnboarding) {
       startTour(user.role as any);
+          localStorage.setItem(`has_seen_onboarding_${user.role}`, 'true');
     }
 
     // Intelligent role-based routing for the "Command" button
