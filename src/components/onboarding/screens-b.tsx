@@ -15,7 +15,7 @@ export const Location: React.FC<ScreenProps> = ({ theme }) => {
       <div style={{ marginTop: 24, height: 200, borderRadius: 16, background: c.surface, border: `1px solid ${c.border}`, position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(${c.border} 1px, transparent 1px),linear-gradient(90deg, ${c.border} 1px, transparent 1px)`, backgroundSize: '24px 24px', opacity: 0.55 }} />
         {pins.map((v, i) => (
-          <div key={i} style={{ position: 'absolute', left: v.x, top: v.y, transform: 'translate(-50%,-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+          <div key={ih} style={{ position: 'absolute', left: v.x, top: v.y, transform: 'translate(-50%,-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
             <div style={{ width: v.active ? 14 : 10, height: v.active ? 14 : 10, borderRadius: 999, background: v.active ? c.accent : c.fg3, boxShadow: v.active ? `0 0 0 6px ${c.accentSoft}` : 'none', border: `2px solid ${c.surface}` }} />
             <div style={{ fontFamily: fonts.mono, fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', color: v.active ? c.accent : c.fg3 }}>{v.name}</div>
           </div>
