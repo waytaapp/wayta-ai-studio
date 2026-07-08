@@ -90,7 +90,7 @@ export const CommandCenterView: React.FC<CommandCenterViewProps> = ({
            {/* Metrics Grid */}
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {metrics.map((m, i) => (
-                <div key={i} className="bg-surface-container border border-outline/10 p-6 rounded-[2rem] space-y-3">
+                <div key={m.label} className="bg-surface-container border border-outline/10 p-6 rounded-[2rem] space-y-3">
                    <div className="flex justify-between items-start">
                       <m.icon className={m.color} size={20} />
                       <span className="text-[10px] font-black text-emerald-500 uppercase">{m.trend}</span>
@@ -110,7 +110,7 @@ export const CommandCenterView: React.FC<CommandCenterViewProps> = ({
                  <div className="grid grid-cols-2 gap-4">
                     {quickActions.map((action, i) => (
                       <button 
-                        key={i} 
+                        key={action.id} 
                         onClick={() => handleAction(action.id)}
                         className={cn(
                           "p-8 rounded-[2.5rem] border border-outline/10 flex flex-col gap-4 text-left group transition-all active:scale-95",
