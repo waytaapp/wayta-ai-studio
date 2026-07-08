@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { type UserRole } from '../types';
 import { Button } from '../ui/Button';
-import { BrandLockup } from '../ui/BrandLockup';
 import { ProgressBar } from '../ui/ProgressBar';
+import { ThemeToggle } from '../ui/ThemeToggle';
+import { useViewport } from '../../../hooks/useViewport';
+import { BrandPanel } from './BrandPanel';
 import { WelcomeScreen } from './screens/WelcomeScreen';
 import { RoleScreen } from './screens/RoleScreen';
 import { PhoneScreen } from './screens/PhoneScreen';
@@ -55,6 +57,8 @@ export interface OnboardingShellProps {
 
 export const OnboardingShell: React.FC<OnboardingShellProps> = ({ onComplete, onExit }) => {
   const navigate = useNavigate();
+  const viewport = useViewport();
+  const isWide = viewport.width >= 860;
   const [step, setStep] = useState(0);
   const [data, setData] = useState<OnboardingData>(initialData);
   const progress = ((step + 1) / STEP_NAMES.length) * 100;
@@ -119,7 +123,7 @@ export const OnboardingShell: React.FC<OnboardingShellProps> = ({ onComplete, on
 
   const renderScreen = () => {
     switch (step) {
-      case 0: return <WelcomeScreen />;
+      case 0: return <WelcomeScreen hideHero={isWide} />;
       case 1: return <RoleScreen value={data.role} onChange={handleRoleChange} />;
       case 2: return <PhoneScreen value={data.phone} onChange={(v) => update('phone', v)} />;
       case 3: return <OTPScreen phone={data.phone} digits={data.otp} onChange={(v) => update('otp', v)} />;
@@ -174,19 +178,22 @@ export const OnboardingShell: React.FC<OnboardingShellProps> = ({ onComplete, on
     }
   };
 
-  return (
+  const formPanel = (
     <div style={{
-      minHeight: '100vh',
+      flex: 1,
+      minWidth: 0,
+      minHeight: 0,
       display: 'flex',
       flexDirection: 'column',
       background: 'var(--bg)',
       color: 'var(--fg)',
-      width: '100%',
+      overflow: isWide ? 'auto' : 'visible',
     }}>
       {/* Header */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '20px 24px 12px',
+        padding: '20px 24px 12px', width: '100%', maxWidth: 600,
+        margin: '0 auto', boxSizing: 'border-box',
       }}>
         <button
           type="button"
@@ -209,7 +216,7 @@ export const OnboardingShell: React.FC<OnboardingShellProps> = ({ onComplete, on
       </div>
 
       {/* Progress */}
-      <div style={{ padding: '0 24px 8px' }}>
+      <div style={{ padding: '0 24px 8px', width: '100%', maxWidth: 600, margin: '0 auto', boxSizing: 'border-box' }}>
         <ProgressBar value={progress} size="sm" />
       </div>
 
@@ -219,17 +226,11 @@ export const OnboardingShell: React.FC<OnboardingShellProps> = ({ onComplete, on
         display: 'flex',
         flexDirection: 'column',
         padding: '24px',
-        maxWidth: 480,
+        maxWidth: 600,
         width: '100%',
         margin: '0 auto',
         boxSizing: 'border-box',
       }}>
-        {step === 0 && (
-          <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}>
-            <BrandLockup size={48} />
-          </div>
-        )}
-
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -277,6 +278,37 @@ export const OnboardingShell: React.FC<OnboardingShellProps> = ({ onComplete, on
           )}
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      height: isWide ? '100vh' : undefined,
+      display: 'flex',
+      flexDirection: isWide ? 'row' : 'column',
+      background: 'var(--bg)',
+      color: 'var(--fg)',
+      width: '100%',
+      overflow: isWide ? 'hidden' : undefined,
+      position: 'relative',
+    }}>
+      {/* Theme toggle */}
+      <div style={{ position: 'fixed', top: 16, right: 16, zIndex: 100 }}>
+        <ThemeToggle />
+      </div>
+
+      {/* Brand rail — full-height beside the form on desktop, slim header on mobile */}
+      <div style={{
+        width: isWide ? '42%' : '100%',
+        maxWidth: isWide ? 560 : undefined,
+        height: isWide ? '100%' : 'auto',
+        flexShrink: 0,
+      }}>
+        <BrandPanel step={step} total={STEP_NAMES.length} compact={!isWide} />
+      </div>
+
+      {formPanel}
     </div>
   );
 };

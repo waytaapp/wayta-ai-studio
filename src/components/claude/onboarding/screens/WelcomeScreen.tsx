@@ -3,23 +3,30 @@ import { Title } from '../../ui/Title';
 import { Lead } from '../../ui/Lead';
 import { Icon } from '../../ui/Icon';
 
-export const WelcomeScreen: React.FC = () => (
+export interface WelcomeScreenProps {
+  /** Hide the gradient "Skip the queue." hero card (used when the desktop brand rail shows it). */
+  hideHero?: boolean;
+}
+
+export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ hideHero = false }) => (
   <div style={{ display: 'flex', flexDirection: 'column' }}>
-    <div style={{
-      padding: '20px 22px', borderRadius: 20,
-      background: 'linear-gradient(160deg, var(--accent) 0%, var(--wayta-emerald-700) 100%)',
-      color: 'var(--fg-on-emerald)', marginBottom: 22,
-    }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.18em' }}>
-          WAYTA / NIGHT.01
-        </span>
-        <Icon name="sparkle" size={18} />
+    {!hideHero && (
+      <div style={{
+        padding: '20px 22px', borderRadius: 20,
+        background: 'linear-gradient(160deg, var(--accent) 0%, var(--wayta-emerald-700) 100%)',
+        color: 'var(--fg-on-emerald)', marginBottom: 22,
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.18em' }}>
+            WAYTA / NIGHT.01
+          </span>
+          <Icon name="sparkle" size={18} />
+        </div>
+        <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 32, lineHeight: 1.05, marginTop: 18 }}>
+          Skip<br />the queue.
+        </div>
       </div>
-      <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 32, lineHeight: 1.05, marginTop: 18 }}>
-        Skip<br />the queue.
-      </div>
-    </div>
+    )}
 
     <Eyebrow accent>● ON-SITE ORDER & PAY</Eyebrow>
     <Title>Order drinks. Pay on-site. Collect fast.</Title>
