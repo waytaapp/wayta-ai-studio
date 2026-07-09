@@ -26,3 +26,7 @@ dist-ssr
 service-account.json
 Service Account JSON Structure.json
 .env
+
+# Android SDK (bootstrapped locally via scripts/setup-android-sdk.sh)
+android_sdk/
+local.properties
